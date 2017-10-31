@@ -1,0 +1,232 @@
+select * from G;
+
+    GEM_NO T G_SIZE              WEIGHT DISP
+---------- - --------------- ---------- ---------------
+         1 D 12                   68.14 sold
+         2 R 13                      76 store
+         3 S 14                      82 contact
+         4 E 18                   93.15 store
+         5 P 21                  102.32 miner
+         6 D 34                  121.85 DAF
+         7 S 9                    51.24 contact
+         8 P 4                    16.86 sold
+
+8 rows selected.
+
+SQL> select * GEM_NO from A
+  2  where AMOUNT>5000
+  3  and GEM_NO not in
+  4  (select GEM_NO from F);
+
+no rows selected
+
+SQL> select FROM_CONTACT,sum(AMOUNT),avg(AMOUNT) from B,C
+  2  where C.CONTACT_NO = B.FROM_CONTACT
+  3  and RELIABLE<6
+  4  group by FROM_CONTACT
+  5  having count(*)>=3;
+
+no rows selected
+
+SQL> select GEM_NO from G
+  2  where GEM_NO =
+  3  (select GEM_NO from A
+  4  where RATER_NO =
+  5  (select RATER_NO from R
+  6  where NAME like 'V%'
+  7  and (NAME not like '%k'
+  8  and NAME not like '%p')
+  9  and NAME like '%d%'
+ 10  and QUALITY is null));
+
+no rows selected
+
+SQL> create view ViewD(MINER_NO,M_COUNT)
+  2  as select MINER_NO,count(*)
+  3  from D
+  4  group by MINER_NO;
+
+View created.
+
+SQL> select M.MINER_NO,NAME from ViewD,M
+  2  where M.MINER_NO = ViewD.MINER_NO
+  3  and M_COUNT =
+  4  (select max(M_COUNT) from viewD);
+
+  MINER_NO NAME
+---------- ------------------------------
+     33501 Max
+     33502 Stone
+     33503 Ray
+     33504 Bean
+     33505 Cameron
+     33506 Micheal
+     33507 Madonna
+
+7 rows selected.
+
+SQL> select CONTACT_NO,NAME from C
+  2  where CONTACT_NO not in
+  3  (select FROM_CONTACT from B);
+
+no rows selected
+
+SQL> select MINER_NO,NAME from M
+  2  where not exists
+  3  (select * from C
+  4  where not exists
+  5  (select * from F
+  6  where F.MINER_NO = M.MINER_NO
+  7  and F.CONTACT_NO = C.CONTACT_NO));
+
+no rows selected
+
+SQL> insert into G
+  2  values(88,'D',4,5,null);
+
+1 row created.
+
+SQL> select * from G;
+
+    GEM_NO T G_SIZE              WEIGHT DISP
+---------- - --------------- ---------- ---------------
+         1 D 12                   68.14 sold
+         2 R 13                      76 store
+         3 S 14                      82 contact
+         4 E 18                   93.15 store
+         5 P 21                  102.32 miner
+         6 D 34                  121.85 DAF
+         7 S 9                    51.24 contact
+         8 P 4                    16.86 sold
+        88 D 4                        5
+
+9 rows selected.
+
+SQL> select * from A;
+
+APPRISAL_NO A_DATE       RATER_NO     GEM_NO     AMOUNT
+----------- ---------- ---------- ---------- ----------
+       2501 09/13/2014         22          2       1800
+       2502 02/14/2014         25          3        500
+       2503 03/25/2014         27          5       3000
+       2504 04/21/2014         22          6        700
+       2505 05/01/2014         24          1        600
+       2506 05/05/2014         21          7       1200
+       2507 08/15/2014         23          4       2500
+
+7 rows selected.
+
+SQL> insert into A
+  2  values(44,null,null,88,80000;
+
+ERROR at line 2:
+ORA-00917: missing comma
+
+SQL> c/80000/80000)/p
+  2* values(44,null,null,88,80000)
+SQL> r
+  1  insert into A
+  2* values(44,null,null,88,80000)
+
+1 row created.
+
+SQL> insert into A
+  2  values(77,null,null,88,90000);
+
+1 row created.
+
+SQL> select * from A;
+
+APPRISAL_NO A_DATE       RATER_NO     GEM_NO     AMOUNT
+----------- ---------- ---------- ---------- ----------
+       2501 09/13/2014         22          2       1800
+       2502 02/14/2014         25          3        500
+       2503 03/25/2014         27          5       3000
+       2504 04/21/2014         22          6        700
+       2505 05/01/2014         24          1        600
+       2506 05/05/2014         21          7       1200
+       2507 08/15/2014         23          4       2500
+         44                               88      80000
+         77                               88      90000
+
+9 rows selected.
+
+SQL> select * from B;
+
+    GEM_NO B_DATE         AMOUNT FROM_CONTACT
+---------- ---------- ---------- ------------
+         1 03/23/2014   12000.34         2577
+         2 07/01/2014      15503         7379
+         3 01/13/2014   21040.75         1022
+         4 06/25/2014   26004.22         5456
+         5 02/18/2014    32783.5         5337
+         6 02/21/2014   45060.15         2013
+         7 05/12/2014     8070.9         3133
+         8 03/23/2014   12000.15         1022
+
+8 rows selected.
+
+SQL> insert into B
+  2  values(88,null,90  50000,null);
+insert into B
+            *
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("HL677025"."B"."B_DATE")
+
+
+SQL> insert inot  to B
+  2  values(88,'2  '04/25/2016; ',50000,null);
+
+1 row created.
+
+SQL> select * from B;
+
+    GEM_NO B_DATE         AMOUNT FROM_CONTACT
+---------- ---------- ---------- ------------
+         1 03/23/2014   12000.34         2577
+         2 07/01/2014      15503         7379
+         3 01/13/2014   21040.75         1022
+         4 06/25/2014   26004.22         5456
+         5 02/18/2014    32783.5         5337
+         6 02/21/2014   45060.15         2013
+         7 05/12/2014     8070.9         3133
+         8 03/23/2014   12000.15         1022
+        88 04/25/2016      50000
+
+9 rows selected.
+
+SQL> select GEM_NO from G
+  2  whereGE   GEM_NO not in
+  3  (select GEM_NO from A);
+
+    GEM_NO
+----------
+         8
+
+SQL> create V view ViewS(GEM_NO,S_COUNT)
+  2  as select GEM_NO,count(*)
+  3  from S
+  4  group by GEM_NO;
+
+View created.
+
+SQL> select * from ViewS;
+
+    GEM_NO    S_COUNT
+---------- ----------
+         1          1
+         2          1
+         3          1
+         4          1
+         5          1
+         6          1
+         7          1
+
+7 rows selected.
+
+SQL> select GEM_NO from ViewS
+  2  where S_COUNT=2;
+
+no rows selected
+
+SQL> 
